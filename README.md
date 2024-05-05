@@ -31,7 +31,7 @@ If you'd like to run the game locally or contribute to its development, follow t
    ```bash
    git clone https://github.com/yourgithubusername/roverrush.git
 2. Navigate to the project directory:
-```bash
+   ```bash
    cd roverrush
 Open the index.html file in your web browser to start playing the game locally.
 ## Contributing
