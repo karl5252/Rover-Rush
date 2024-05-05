@@ -30,3 +30,20 @@ If you'd like to run the game locally or contribute to its development, follow t
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourgithubusername/roverrush.git
+2. Navigate to the project directory:
+```bash
+   cd roverrush
+Open the index.html file in your web browser to start playing the game locally.
+## Contributing
+We love contributions! If you have ideas for new features or improvements, please fork the repository and submit a pull request. You can also open an issue to discuss your ideas.
+
+## Authors
+karl5252 - Game Development & Programming
+My daughter - Concept and Art Design
+My wife - Testing and Feedback
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details.
+
+##Acknowledgments
+Thanks to Phaser 3 community and documentation for their invaluable resources.
+Special thanks to our family and friends for their support and feedback.
