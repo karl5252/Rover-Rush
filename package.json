@@ -1,10 +1,10 @@
 {
-  "name": "phaser3-es6-webpack-boilerplate",
+  "name": "rover-rush",
   "version": "1.0.0",
-  "description": "A boilerplate project for creating games with Phaser3, ES6 and Webpack",
+  "description": "Welcome to Rover Rush, an engaging web-based platformer game where players control a futuristic rover collecting colorful stones across various challenging levels. Developed collaboratively for a family talent show, this game features unique artwork inspired by a child's imagination, fun gameplay mechanics, and easy access through web browsers.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
+    "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
