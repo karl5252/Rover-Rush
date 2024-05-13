@@ -4,7 +4,7 @@
   "description": "Welcome to Rover Rush, an engaging web-based platformer game where players control a futuristic rover collecting colorful stones across various challenging levels. Developed collaboratively for a family talent show, this game features unique artwork inspired by a child's imagination, fun gameplay mechanics, and easy access through web browsers.",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development",
+    "dev": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
