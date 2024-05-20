@@ -12,6 +12,9 @@ class Play extends Phaser.Scene {
 
     create() {
         this.score = 0;
+        this.totalEggs = 0;
+        this.collectedEggs = 0;
+
         const map = this.createMap();
         const layers = this.createLayers(map);
         const playerZones = this.getPlayerZones(layers.playerZones);
@@ -107,6 +110,10 @@ class Play extends Phaser.Scene {
         //console.log(collectable.value);
         this.score += collectable.value;
         this.hud.updateScoreboard(this.score);
+        if(collectable.type === 'egg') {
+            this.collectedEggs++;
+            this.hud.updateEggs(this.collectedEggs, this.totalEggs);
+        }
         //debugger;
         //console.log(this.score);
         collectable.disableBody(true, true);
@@ -152,13 +159,26 @@ class Play extends Phaser.Scene {
             .setAlpha(0)
             .setSize(endZone.width, endZone.height)
             .setOrigin(0.5, 1);
-
+    
         const eoOverlap = this.physics.add.overlap(player, endOfLevel, () => {
-            eoOverlap.active = false;
-            this.add.text(endZone.x - 75, endZone.y - 75, 'You Won!', {
-                fontSize: '40px',
-                color: '#ffffff'
-            });
+            let message;
+            if (this.collectedEggs === this.totalEggs) {
+                eoOverlap.active = false;
+                message = this.add.text(endZone.x - 75, endZone.y - 75, 'You Won!', {
+                    fontSize: '40px',
+                    color: '#ffffff'
+                });
+            } else {
+                message = this.add.text(endZone.x - 75, endZone.y - 75, `You need to collect ${this.totalEggs - this.collectedEggs} more eggs!`, {
+                    fontSize: '20px',
+                    color: '#ffffff'
+                });
+            }
+    
+            // Remove the text after 5 seconds
+            setTimeout(() => {
+                message.destroy();
+            }, 5000);
         });
     }
 }

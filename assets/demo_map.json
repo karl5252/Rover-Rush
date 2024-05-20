@@ -95,7 +95,7 @@
                  "type":"Samurai",
                  "visible":true,
                  "width":0,
-                 "x":212.666333333333,
+                 "x":212.666,
                  "y":482.667
                 }],
          "offsetx":24,
@@ -116,6 +116,17 @@
                  "height":32,
                  "id":20,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -128,6 +139,17 @@
                  "height":32,
                  "id":21,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -136,10 +158,21 @@
                  "y":608
                 }, 
                 {
-                 "gid":57,
+                 "gid":1073741881,
                  "height":32,
                  "id":22,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -152,6 +185,17 @@
                  "height":32,
                  "id":23,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -164,6 +208,17 @@
                  "height":32,
                  "id":24,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -176,24 +231,58 @@
                  "height":32,
                  "id":25,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"stone"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":8
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":31,
                  "x":609,
                  "y":608.667
+                }, 
+                {
+                 "gid":58,
+                 "height":32,
+                 "id":26,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"collType",
+                         "type":"string",
+                         "value":"egg"
+                        }, 
+                        {
+                         "name":"scoringValue",
+                         "type":"int",
+                         "value":22
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31,
+                 "x":258.333333333333,
+                 "y":574.666666666667
                 }],
          "opacity":1,
          "properties":[
                 {
-                 "name":"scoringValue",
-                 "type":"int",
-                 "value":1
-                }, 
-                {
-                 "name":"type",
+                 "name":"collType",
                  "type":"string",
                  "value":"stone"
+                }, 
+                {
+                 "name":"value",
+                 "type":"int",
+                 "value":1
                 }],
          "type":"objectgroup",
          "visible":true,
@@ -201,7 +290,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":26,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
@@ -276,18 +365,7 @@
                  "id":0,
                  "image":"stone.png",
                  "imageheight":32,
-                 "imagewidth":31,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"stone"
-                        }, 
-                        {
-                         "name":"value",
-                         "type":"int",
-                         "value":1
-                        }]
+                 "imagewidth":31
                 }],
          "tilewidth":31
         }, 
@@ -309,29 +387,6 @@
                 {
                  "id":0,
                  "image":"egg.png",
-                 "imageheight":32,
-                 "imagewidth":31
-                }],
-         "tilewidth":31
-        }, 
-        {
-         "columns":0,
-         "firstgid":59,
-         "grid":
-            {
-             "height":1,
-             "orientation":"orthogonal",
-             "width":1
-            },
-         "margin":0,
-         "name":"coins",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tiles":[
-                {
-                 "id":0,
-                 "image":"coins.png",
                  "imageheight":32,
                  "imagewidth":31
                 }],

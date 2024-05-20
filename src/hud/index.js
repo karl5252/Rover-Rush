@@ -35,7 +35,12 @@ class Hud extends Phaser.GameObjects.Container {
       .setOrigin(0)
       .setScale(1.3);
 
-    const scoreBoard = this.scene.add.container(0,0, [scoreText, scoreImage]);
+    const eggText = this.scene.add.text(75, 0, `0/` + this.scene.totalEggs, {fontSize: `${this.fontSize}px`, fill: '#fff'});
+    const eggImage = this.scene.add.image(scoreText.width + 105, -13, 'egg')
+        .setOrigin(0)
+        .setScale(1.3);
+
+    const scoreBoard = this.scene.add.container(0,0, [scoreText, scoreImage, eggText, eggImage]);
     scoreBoard.setName('scoreBoard');
     return scoreBoard
   }
@@ -44,6 +49,12 @@ class Hud extends Phaser.GameObjects.Container {
     const [scoreText, scoreImage] = this.getByName('scoreBoard').list;
     scoreText.setText(score);
     scoreImage.setX(scoreText.width + 5);
+  }
+
+  updateEggs(collectedEggs, totalEggs) {
+    const [, , eggText, eggImage] = this.getByName('scoreBoard').list;
+    eggText.setText(`${collectedEggs}/${totalEggs}`);
+    //eggImage.setX(eggText.width + 25);
   }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="55" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="26">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="55" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="27">
  <editorsettings>
   <export target="demo_map.json" format="json"/>
  </editorsettings>
@@ -29,10 +29,6 @@
  <tileset firstgid="57" name="stone" tilewidth="31" tileheight="32" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <properties>
-    <property name="type" value="stone"/>
-    <property name="value" type="int" value="1"/>
-   </properties>
    <image width="31" height="32" source="stone.png"/>
   </tile>
  </tileset>
@@ -40,12 +36,6 @@
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="31" height="32" source="egg.png"/>
-  </tile>
- </tileset>
- <tileset firstgid="59" name="coins" tilewidth="31" tileheight="32" tilecount="1" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="31" height="32" source="coins.png"/>
   </tile>
  </tileset>
  <layer id="2" name="colliders" width="55" height="21">
@@ -138,14 +128,50 @@
  </objectgroup>
  <objectgroup id="6" name="collectibles">
   <properties>
-   <property name="scoringValue" type="int" value="1"/>
-   <property name="type" value="stone"/>
+   <property name="collType" value="stone"/>
+   <property name="value" type="int" value="1"/>
   </properties>
-  <object id="20" gid="57" x="97" y="606.667" width="31" height="32"/>
-  <object id="21" gid="57" x="162.333" y="608" width="31" height="32"/>
-  <object id="22" gid="57" x="128.333" y="576.667" width="31" height="32"/>
-  <object id="23" gid="57" x="482.333" y="608" width="31" height="32"/>
-  <object id="24" gid="57" x="543.667" y="576" width="31" height="32"/>
-  <object id="25" gid="57" x="609" y="608.667" width="31" height="32"/>
+  <object id="20" gid="57" x="97" y="606.667" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="21" gid="57" x="162.333" y="608" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="22" gid="1073741881" x="128.333" y="576.667" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="23" gid="57" x="482.333" y="608" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="24" gid="57" x="543.667" y="576" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="25" gid="57" x="609" y="608.667" width="31" height="32">
+   <properties>
+    <property name="collType" value="stone"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
+  <object id="26" gid="58" x="258.333" y="574.667" width="31" height="32">
+   <properties>
+    <property name="collType" value="egg"/>
+    <property name="scoringValue" type="int" value="8"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
