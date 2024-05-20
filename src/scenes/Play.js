@@ -1,131 +1,166 @@
 import Phaser from 'phaser';
 import Player from '../entities/Player';
-//import Samurai from '../entities/Samurai';
 import Enemies from '../groups/Enemies';
+import Collectibles from '../groups/Collectibles';
+import Hud from '../hud';
 
 class Play extends Phaser.Scene {
+    constructor(config) {
+        super('PlayScene');
+        this.config = config;
+    }
 
-  constructor(config) {
-    super('PlayScene');
-    this.config = config;
-  }
+    create() {
+        this.score = 0;
+        const map = this.createMap();
+        const layers = this.createLayers(map);
+        const playerZones = this.getPlayerZones(layers.playerZones);
 
-  create() {
-    //const background = this.add.image(0, 0, 'bg').setOrigin(0, 0);
-    const map = this.createMap();
-    const layers = this.createLayers(map);
-    const playerZones = this.getPlayerZones(layers.playerZones);
+        const player = this.createPlayer(playerZones.start);
+        const enemies = this.createEnemies(layers.enemySpawns, layers.platformsColliders);
 
-    const player = this.createPlayer(playerZones.start);
-    const enemies = this.createEnemies(layers.enemySpawns);
+        const collectables = this.createCollectibles(layers.collectibleLayer);
 
-//    this.playerSpeed = 200;
-    //player.addCollider(layers.platformsColliders);
+        this.hud = new Hud(this, 0, 0);
+        
+        this.createPlayerColliders(player, {
+            colliders: {
+                platformsColliders: layers.platformsColliders,
+                enemies: enemies,
+                collectables,
+            },
+        });
 
-    //this.physics.add.collider(player, layers.platformsColliders);
-    //enemy.addCollider(layers.platformsColliders);
-    this.createPlayerColliders(player, { colliders: {
-      platformsColliders: layers.platformsColliders
-    }});
-    this.createEnemyColliders(enemies, { colliders: {
-      platformsColliders: layers.platformsColliders,
-      player: player
+        this.createEnemyColliders(enemies, {
+            colliders: {
+                platformsColliders: layers.platformsColliders,
+                player: player,
+            },
+        });
+        
+        this.createEndZone(playerZones.end, player);
+        this.setupFollowupCamera(player);
+    }
 
-    }});
+    createMap() {
+        const map = this.make.tilemap({ key: 'map' });
+        map.addTilesetImage('demo_build_1', 'tiles-1');
+        return map;
+    }
 
+    createLayers(map) {
+        const tileset = map.getTileset('demo_build_1');
+        const platformsColliders = map.createStaticLayer('colliders', tileset);
+        const environment = map.createStaticLayer('environment', tileset);
+        const platforms = map.createStaticLayer('platforms', tileset);
+        const playerZones = map.getObjectLayer('playerZones');
+        const enemySpawns = map.getObjectLayer('enemySpawnPoints');
+        const collectibleLayer = map.getObjectLayer('collectibles');
 
+        platformsColliders.setCollisionByProperty({ collides: true });
 
-    this.createEndZone(playerZones.end, player);
-    this.setupFollowupCamera(player);
-    //this.cameras.main.startFollow(player);
-  }
+        return { 
+            environment,
+             platforms,
+              platformsColliders,
+               playerZones,
+                enemySpawns,
+                 collectibleLayer };
+    }
 
-  createMap() {
-    const map = this.make.tilemap({key: 'map'});
-    map.addTilesetImage('demo_build_1', 'tiles-1');
-    return map;
-  }
+    createPlayer(start) {
+        const player = new Player(this, start.x, start.y);
+        return player;
+    }
 
-  createLayers(map) {
-    const tileset = map.getTileset('demo_build_1');
-    const platformsColliders = map.createStaticLayer('colliders', tileset);
-    const environment = map.createStaticLayer('environment', tileset);
-    const platforms = map.createStaticLayer('platforms', tileset);
-    const playerZones = map.getObjectLayer('playerZones');
-    const enemySpawns = map.getObjectLayer('enemySpawnPoints');
+    createEnemies(spawnLayer, platformsColliders) {
+        const enemies = new Enemies(this);
+        const enemyTypes = enemies.getTypes();
 
+        spawnLayer.objects.forEach(spawnPoint => {
+            const enemy = new enemyTypes[spawnPoint.type](this, spawnPoint.x, spawnPoint.y);
+            enemy.setPlatformColliders(platformsColliders);
+            enemies.add(enemy);
+        });
 
-    platformsColliders.setCollisionByProperty({collides: true});
+        return enemies;
+    }
+    createCollectibles(collectibleLayer) {
+        const collectibles = new Collectibles(this).setDepth(-1);
+        collectibles.addFromLayer(collectibleLayer);
 
-    return { environment, platforms, platformsColliders, playerZones, enemySpawns };
-  }
+        //collectibleLayer.objects.forEach(collectible => {
+            //collectables.get(collectible.x, collectible.y, 'stone').setDepth(-1);
+            //collectables.add(new Collectible(this, collectible.x, collectible.y, 'stone'));
+            //collectibles.get(collectible.x, collectible.y, 'stone');
+       // });
+        return collectibles;
+    }
 
-createPlayer(start) {
-    const player = new Player(this, start.x, start.y);
-    //const player = this.physics.add.sprite(100, 250, 'player');
-    //player.body.setGravityY(500);
-    //.setCollideWorldBounds(true);
-    return player;
-  }
+    onPlayerCollision(enemy, player) {
+        console.log('Player collided with enemy');
+        player.playerDeath(enemy);
+    }
 
-  createEnemies(spawnLayer) {
-    const enemies = new Enemies(this);
-    const enemyTypes = enemies.getTypes();
+    onCollect(entity,collectable) {
+        console.log('collected an item');
+        //console.log(collectable.value);
+        this.score += collectable.value;
+        this.hud.updateScoreboard(this.score);
+        //debugger;
+        //console.log(this.score);
+        collectable.disableBody(true, true);
+ }
 
-    spawnLayer.objects.forEach(spawnPoint => {
-      const enemy = new enemyTypes[spawnPoint.type](this, spawnPoint.x, spawnPoint.y);
-      enemies.add(enemy);
-    })
+    createPlayerColliders(player, { colliders }) {
+        player
+        .addCollider(colliders.platformsColliders)
+        .addOverlap(colliders.collectables, this.onCollect, this);
+        
+    }
 
-    return enemies;
-  }
+    createEnemyColliders(enemies, { colliders }) {
+        enemies
+            .addCollider(colliders.platformsColliders)
+            .addCollider(colliders.player, this.onPlayerCollision); // Ensure correct context
+    }
 
-createEnemyColliders(enemies, { colliders }) {
-  enemies
-    .addCollider(colliders.platformsColliders)
-    .addCollider(colliders.player);
-  }
+    /*setupFollowupCamera(player) {
+        const { width, height, mapOffset } = this.config;
+        this.physics.world.setBounds(0, 0, width + mapOffset, height + 200);
+        this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(2);
 
+        this.cameras.main.startFollow(player);
+    }*/
+    setupFollowupCamera(player) {
+        const { height, width, mapOffset, zoomFactor } = this.config;
+        this.physics.world.setBounds(0, 0, width + mapOffset, height + 200);
+        this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(zoomFactor);
+        this.cameras.main.startFollow(player);
+      }
 
-createPlayerColliders(player, { colliders }) {
-  player.addCollider(colliders.platformsColliders);
+    getPlayerZones(playerZonesLayer) {
+        const playerZones = playerZonesLayer.objects;
+        return {
+            start: playerZones.find(zone => zone.name === 'startZone'),
+            end: playerZones.find(zone => zone.name === 'endZone'),
+        };
+    }
+
+    createEndZone(endZone, player) {
+        const endOfLevel = this.physics.add.sprite(endZone.x, endZone.y + 5, 'end')
+            .setAlpha(0)
+            .setSize(endZone.width, endZone.height)
+            .setOrigin(0.5, 1);
+
+        const eoOverlap = this.physics.add.overlap(player, endOfLevel, () => {
+            eoOverlap.active = false;
+            this.add.text(endZone.x - 75, endZone.y - 75, 'You Won!', {
+                fontSize: '40px',
+                color: '#ffffff'
+            });
+        });
+    }
 }
-
-setupFollowupCamera(player) {
-  const { width, height, mapOffset } = this.config;
-  this.physics.world.setBounds(0, 0, width + mapOffset, height + 200);
-  this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(2);
-
-  this.cameras.main.startFollow(player);
-}
-
-getPlayerZones(playerZonesLayer) {
-  //return map.getObjectLayer('playerZones').objects;
-  const playerZones = playerZonesLayer.objects;
-  return {
-    start:playerZones.find(zone => zone.name === 'startZone'),
-    end:playerZones.find(zone => zone.name === 'endZone')
-
-  }
-}
-createEndZone(endZone, player) {
-
-  const endOfLevel = this.physics.add.sprite(endZone.x, endZone.y + 5, 'end')
-  .setAlpha(0)
-  .setSize(endZone.width, endZone.height)
-  .setOrigin(0.5, 1);
-
-  const eoOverlap = this.physics.add.overlap(player, endOfLevel, () => {
-    eoOverlap.active = false;
-    // display a big text on the screen you won
-    this.add.text(endZone.x - 75, endZone.y - 75, 'You Won!', {
-      fontSize: '40px',
-      color: '#ffffff'
-    });
-    //this.scene.restart();
-  });
-  }
-}
-
 
 export default Play;
