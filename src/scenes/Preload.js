@@ -13,6 +13,8 @@ class Preload extends Phaser.Scene {
     //this.load.image('player', 'assets/ninja.png');
 
     this.load.image('stone', 'assets/stone.png');
+    this.load.image('coins', 'assets/coins.png');
+    this.load.image('egg', 'assets/egg.png');
 
     this.load.spritesheet(
         'player', 'assets/player/player_move.png', {

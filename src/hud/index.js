@@ -31,7 +31,7 @@ class Hud extends Phaser.GameObjects.Container {
 
   createScoreboard() {
     const scoreText = this.scene.add.text(0, 0, '0', {fontSize: `${this.fontSize}px`, fill: '#fff'});
-    const scoreImage = this.scene.add.image(scoreText.width + 5, -13, 'stone')
+    const scoreImage = this.scene.add.image(scoreText.width + 5, -13, 'coins')
       .setOrigin(0)
       .setScale(1.3);
 
