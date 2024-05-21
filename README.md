@@ -23,7 +23,7 @@ Starts a development server that will automatically refresh the page as you make
 
 To start the server run:
 
-`npm run start`
+`npm run dev`
 
 ### Distribution
 Bundles and minimises scripts and outputs them along with a copy of the assets/ folder to output directory dist/.
