@@ -164,21 +164,20 @@ class Play extends Phaser.Scene {
             let message;
             if (this.collectedEggs === this.totalEggs) {
                 eoOverlap.active = false;
-                message = this.add.text(endZone.x - 75, endZone.y - 75, 'You Won!', {
-                    fontSize: '40px',
-                    color: '#ffffff'
-                });
+                // set player alive to false to stop event listeners
+                player.alive = false;
+                this.scene.start('EndGameScene', { score: this.score });
             } else {
                 message = this.add.text(endZone.x - 75, endZone.y - 75, `You need to collect ${this.totalEggs - this.collectedEggs} more eggs!`, {
                     fontSize: '20px',
                     color: '#ffffff'
                 });
-            }
     
-            // Remove the text after 5 seconds
-            setTimeout(() => {
-                message.destroy();
-            }, 5000);
+                // Remove the text after 5 seconds
+                setTimeout(() => {
+                    message.destroy();
+                }, 5000);
+            }
         });
     }
 }

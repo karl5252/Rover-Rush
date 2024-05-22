@@ -22,7 +22,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 500;
     this.playerSpeed = 30;
 
-    this.rayGraphics = this.scene.add.graphics({ lineStyle: { width: 2, color: 0x00FFFF } });
+    this.rayGraphics = this.scene.add.graphics({ lineStyle: { width: 0} });//, color: 0x00FFFF } });
     this.previousRayX = this.x; // Store the initial x position for raycasting
 
     this.body.setGravityY(this.gravity);

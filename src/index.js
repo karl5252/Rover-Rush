@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
+import MenuScene from './scenes/Menu';
+import EndGameScene from './scenes/EndGame';
 
 const WIDTH = document.body.offsetWidth;
 const HEIGHT = 700;
@@ -23,7 +25,7 @@ const SHARED_CONFIG = {
   }
 }
 
-const Scenes = [PreloadScene, PlayScene];
+const Scenes = [PreloadScene, MenuScene, PlayScene, EndGameScene];
 const createScene = Scene => new Scene(SHARED_CONFIG)
 const initScenes = () => Scenes.map(createScene)
 
@@ -34,7 +36,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
     }
   },
   scene: initScenes()
