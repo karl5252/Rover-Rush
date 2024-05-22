@@ -143,7 +143,7 @@
     <property name="scoringValue" type="int" value="8"/>
    </properties>
   </object>
-  <object id="22" gid="1073741881" x="128.333" y="576.667" width="31" height="32">
+  <object id="22" gid="57" x="128.333" y="576.667" width="31" height="32">
    <properties>
     <property name="collType" value="stone"/>
     <property name="scoringValue" type="int" value="8"/>
@@ -170,7 +170,7 @@
   <object id="26" gid="58" x="258.333" y="574.667" width="31" height="32">
    <properties>
     <property name="collType" value="egg"/>
-    <property name="scoringValue" type="int" value="8"/>
+    <property name="scoringValue" type="int" value="22"/>
    </properties>
   </object>
  </objectgroup>
