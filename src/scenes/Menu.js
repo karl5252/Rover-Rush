@@ -10,7 +10,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'Rover Rage', {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'Ninja Rage', {
       fontSize: '48px',
       color: '#ffffff'
     }).setOrigin(0.5);
@@ -26,11 +26,25 @@ class MenuScene extends Phaser.Scene {
       this.scene.start('PlayScene');
     });
 
+    // add below text with controls information and game goals
+    //arrow keys for moving and space for jump
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, 'Arrow keys for moving and space for jump', {
+      fontSize: '18px',
+      color: '#ffffff'
+    }).setOrigin(0.5);
+
+    // ninja has to gather dragon eggs, reach far right end and avoid samurais
+
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 150, 'Ninja has to gather dragon eggs, reach far right end and avoid samurais', {
+      fontSize: '18px',
+      color: '#ffffff'
+    }).setOrigin(0.5);
+
     // Optionally, add more buttons or menu items here
     this.add.image(this.cameras.main.centerX - 200, this.cameras.main.centerY, 'player')
     .setOrigin(0.5)
     .setScale(2);
-    
+
     this.add.image(this.cameras.main.centerX + 200, this.cameras.main.centerY, 'samurai')
     .setOrigin(0.5)
     .setScale(2)

@@ -15,6 +15,9 @@ class Play extends Phaser.Scene {
         this.totalEggs = 0;
         this.collectedEggs = 0;
 
+        //background resize to match the game size
+        this.add.image(0, 0, 'bg').setOrigin(0).scrollFactorX = 0.5;
+
         const map = this.createMap();
         const layers = this.createLayers(map);
         const playerZones = this.getPlayerZones(layers.playerZones);
@@ -47,13 +50,13 @@ class Play extends Phaser.Scene {
 
     createMap() {
         const map = this.make.tilemap({ key: 'map' });
-        map.addTilesetImage('demo_build_1', 'tiles-1');
+        map.addTilesetImage('tilemap', 'background_tiles');
         return map;
     }
 
     createLayers(map) {
-        const tileset = map.getTileset('demo_build_1');
-        const platformsColliders = map.createStaticLayer('colliders', tileset);
+        const tileset = map.getTileset('tilemap');
+        const platformsColliders = map.createStaticLayer('colliders', tileset).setAlpha(0);
         const environment = map.createStaticLayer('environment', tileset);
         const platforms = map.createStaticLayer('platforms', tileset);
         const playerZones = map.getObjectLayer('playerZones');
