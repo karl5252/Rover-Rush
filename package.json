@@ -4,7 +4,10 @@
   "description": "Welcome to Rover Rush, an engaging web-based platformer game where players control a futuristic rover collecting colorful stones across various challenging levels. Developed collaboratively for a family talent show, this game features unique artwork inspired by a child's imagination, fun gameplay mechanics, and easy access through web browsers.",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development",
+    "start": "node app.js",
+    "dev": "concurrently \"npm run dev:game\" \"npm run dev:server\"",
+    "dev:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development --config webpack.config.js",
+    "dev:server": "nodemon server/app.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,9 +16,11 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.11.6",
-    "@babel/preset-env": "^7.11.5",
+    "@babel/plugin-transform-runtime": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^2.0.2",
+    "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^5.1.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
@@ -25,6 +30,11 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.24.6",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
     "phaser": "^3.24.1"
   }
 }

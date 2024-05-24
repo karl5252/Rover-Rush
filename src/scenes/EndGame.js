@@ -8,6 +8,7 @@ class EndGameScene extends Phaser.Scene {
   init(data) {
     this.message = data.message;
     this.score = data.score || 0;
+    this.leaderboardUpdated = false; // Flag to check if leaderboard is updated
   }
 
   create() {
@@ -26,7 +27,28 @@ class EndGameScene extends Phaser.Scene {
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    const restartButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, 'Restart', {
+    // Input field for initials
+    this.initialsInput = this.add.dom(this.cameras.main.centerX, this.cameras.main.centerY + 100).createFromHTML(`
+      <input type="text" id="initials" name="initials" maxlength="3" placeholder="Initials">
+    `);
+
+    // Submit button
+    const submitButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 150, 'Submit', {
+      fontSize: '32px',
+      color: '#ffffff',
+      backgroundColor: '#000000'
+    }).setOrigin(0.5).setPadding(10).setInteractive();
+
+    submitButton.on('pointerdown', async () => {
+      const initials = document.getElementById('initials').value.toUpperCase();
+      if (initials.length === 3) {
+        await this.updateLeaderboard(initials, this.score);
+        this.displayLeaderboard();
+      }
+    });
+
+    // Restart button
+    const restartButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 200, 'Restart', {
       fontSize: '32px',
       color: '#ffffff',
       backgroundColor: '#000000'
@@ -36,7 +58,8 @@ class EndGameScene extends Phaser.Scene {
       this.scene.start('PlayScene');
     });
 
-    const menuButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 200, 'Main Menu', {
+    // Main Menu button
+    const menuButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 250, 'Main Menu', {
       fontSize: '32px',
       color: '#ffffff',
       backgroundColor: '#000000'
@@ -45,27 +68,47 @@ class EndGameScene extends Phaser.Scene {
     menuButton.on('pointerdown', () => {
       this.scene.start('MenuScene');
     });
-
-    // Add and configure the snail
-    //this.snail = new Snail(this, this.cameras.main.centerX - 200, this.cameras.main.centerY);
   }
-  
-  
- /* update(time, delta) {
-    // Snail walking animation
-    this.snail.anims.play('snail-walk', true);
 
-    // Snail movement logic
-    this.snail.x += this.snailSpeed * this.snailDirection * (delta / 1000);
-
-    if (this.snail.x >= this.cameras.main.width - 50) {
-      this.snailDirection = -1;
-      this.snail.setFlipX(true);
-    } else if (this.snail.x <= 50) {
-      this.snailDirection = 1;
-      this.snail.setFlipX(false);
+  async updateLeaderboard(initials, score) {
+    try {
+      const response = await fetch('/leaderboard', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ initials, score })
+      });
+      if (response.ok) {
+        this.leaderboardUpdated = true;
+      }
+    } catch (error) {
+      console.error('Error updating leaderboard:', error);
     }
-  }*/
+  }
+
+  async displayLeaderboard() {
+    if (!this.leaderboardUpdated) return;
+
+    try {
+      const response = await fetch('/leaderboard');
+      const leaderboard = await response.json();
+
+      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 300, 'Leaderboard:', {
+        fontSize: '32px',
+        color: '#ffffff'
+      }).setOrigin(0.5);
+
+      leaderboard.forEach((entry, index) => {
+        this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 350 + (index * 30), `${entry.initials}.......${entry.score}`, {
+          fontSize: '28px',
+          color: '#ffffff'
+        }).setOrigin(0.5);
+      });
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+    }
+  }
 }
 
 export default EndGameScene;
