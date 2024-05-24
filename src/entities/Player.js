@@ -21,6 +21,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.gravity = 500;
         this.playerSpeed = 200;
         this.cursors = this.scene.input.keyboard.createCursorKeys();
+        this.jumpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.body.setGravityY(this.gravity);
         this.setCollideWorldBounds(true);
         this.setOrigin(0.5, 1);
@@ -57,7 +58,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(0);
         }
 
-        if (this.cursors.up.isDown && onFloor) {
+        if ((this.cursors.up.isDown || this.jumpKey.isDown) && onFloor) {
             this.setVelocityY(-this.playerSpeed * 2.1);
         }
 

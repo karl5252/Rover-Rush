@@ -45,7 +45,27 @@ class EndGameScene extends Phaser.Scene {
     menuButton.on('pointerdown', () => {
       this.scene.start('MenuScene');
     });
+
+    // Add and configure the snail
+    //this.snail = new Snail(this, this.cameras.main.centerX - 200, this.cameras.main.centerY);
   }
+  
+  
+ /* update(time, delta) {
+    // Snail walking animation
+    this.snail.anims.play('snail-walk', true);
+
+    // Snail movement logic
+    this.snail.x += this.snailSpeed * this.snailDirection * (delta / 1000);
+
+    if (this.snail.x >= this.cameras.main.width - 50) {
+      this.snailDirection = -1;
+      this.snail.setFlipX(true);
+    } else if (this.snail.x <= 50) {
+      this.snailDirection = 1;
+      this.snail.setFlipX(false);
+    }
+  }*/
 }
 
 export default EndGameScene;

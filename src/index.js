@@ -7,7 +7,7 @@ import EndGameScene from './scenes/EndGame';
 
 const WIDTH = document.body.offsetWidth;
 const HEIGHT = 700;
-const MAP_WIDTH = 1600;
+const MAP_WIDTH = 1732;
 const ZOOM_FACTOR = 0.8;
 
 
