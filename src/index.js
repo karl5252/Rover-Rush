@@ -24,7 +24,7 @@ const SHARED_CONFIG = {
     x: ((WIDTH / ZOOM_FACTOR) + ((WIDTH - (WIDTH / ZOOM_FACTOR)) / 2)),
     y: (HEIGHT - (HEIGHT / ZOOM_FACTOR)) / 2
   },
-  leaderboardUrl: '/.netlify/functions/leaderboard'  //for local testing use 'http://localhost:3000/leaderboard'
+  leaderboardUrl: 'http://localhost:3000/leaderboard'  //for local testing use 'http://localhost:3000/leaderboard'
 
 }
 

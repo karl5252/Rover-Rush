@@ -28,4 +28,14 @@ export default (anims) => {
       frameRate: 1,
       repeat: 1
     })
+
+    anims.create({
+      key: 'hide',
+      frames: anims.generateFrameNumbers('player', {
+        start: 25,
+        end: 38
+      }),
+      frameRate: 6,
+      repeat: 0
+    })
   }
