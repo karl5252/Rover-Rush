@@ -26,7 +26,7 @@ class EndGameScene extends Phaser.Scene {
 
   async displayLeaderboard() {
     try {
-      const response = await fetch('http://localhost:3000/leaderboard');
+      const response = await fetch('/.netlify/functions/leaderboard');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
