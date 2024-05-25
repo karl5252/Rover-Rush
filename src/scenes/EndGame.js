@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 
 class EndGameScene extends Phaser.Scene {
-  constructor() {
+  constructor(config) {
     super('EndGameScene');
+    this.config = config;
   }
 
   init(data) {
@@ -26,7 +27,7 @@ class EndGameScene extends Phaser.Scene {
 
   async displayLeaderboard() {
     try {
-      const response = await fetch('/.netlify/functions/leaderboard');
+      const response = await fetch(this.config.leaderboardUrl);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

@@ -50,7 +50,7 @@ class Play extends Phaser.Scene {
     
     async checkLeaderboardQualification(score) {
       try {
-        const response = await fetch('/.netlify/functions/leaderboard');
+        const response = await fetch(this.config.leaderboardUrl);
         const leaderboard = await response.json();
         const top7 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 7);
         const lowestScore = Math.min(...top7.map(entry => entry.score));
