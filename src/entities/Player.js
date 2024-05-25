@@ -121,10 +121,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.phaseActive = true; // Set the flag to true
         this.phased = !this.phased;
 
-        //this.setAlpha(this.phased ? 0.5 : 1);
-        //this.setTint(this.phased ? 0x00ff00 : 0xffffff);
-        //this.setVelocityX(this.phased ? 0 : 200);
-        //this.setImmovable(true);
         // Disable the player's physics body during the phase out
         if (this.phased) {
             this.body.enable = false;
@@ -134,10 +130,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.delayedCall(1500, () => {
             this.phased = !this.phased;
             console.log(this.phased ? 'Player phased out' : 'Player phased in');
-            //this.setAlpha(1);
-            //this.setTint(0xffffff);
-            //this.setVelocityX(200);
-            //this.setImmovable(false);
+
             // Re-enable the player's physics body when the phase in is complete
             if (!this.phased) {
                 this.body.enable = true;
