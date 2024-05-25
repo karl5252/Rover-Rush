@@ -35,7 +35,7 @@ class MenuScene extends Phaser.Scene {
 
     // ninja has to gather dragon eggs, reach far right end and avoid samurais
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 150, 'Ninja has to gather dragon eggs, reach far right end and avoid samurais', {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 150, 'Ninja has to gather dragon eggs, reach blue flag at the end and avoid samurais', {
       fontSize: '18px',
       color: '#ffffff'
     }).setOrigin(0.5);
