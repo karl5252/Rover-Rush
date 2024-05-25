@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "concurrently \"npm run dev:game\" \"npm run dev:server\"",
     "dev:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development --config webpack.config.js",
-    "dev:server": "nodemon server/app.js",
+    "dev:server": "nodemon ./app.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,8 +22,10 @@
     "clean-webpack-plugin": "^2.0.2",
     "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^5.1.2",
+    "cross-env": "^7.0.3",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^3.1.0",
     "raw-loader": "^2.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
@@ -32,6 +34,7 @@
   "dependencies": {
     "@babel/runtime": "^7.24.6",
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",

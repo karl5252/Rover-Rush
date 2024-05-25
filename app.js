@@ -5,6 +5,7 @@ const leaderboardRoutes = require('./routes/leaderboard');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); 
 
 const mongoose = require('mongoose');
 
@@ -25,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Routes
+app.use(cors());
+
 app.use('/', routes);
 //app.use('/', secureRoutes);
 app.use('/', leaderboardRoutes)

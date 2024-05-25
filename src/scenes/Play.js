@@ -47,6 +47,19 @@ class Play extends Phaser.Scene {
         this.createEndZone(playerZones.end, player);
         this.setupFollowupCamera(player);
     }
+    
+    async checkLeaderboardQualification(score) {
+      try {
+        const response = await fetch('http://localhost:3000/leaderboard');
+        const leaderboard = await response.json();
+        const top7 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 7);
+        const lowestScore = Math.min(...top7.map(entry => entry.score));
+        return score > lowestScore || top7.length < 7;
+      } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+        return false;
+      }
+    }
 
     createMap() {
         const map = this.make.tilemap({ key: 'map' });
@@ -159,30 +172,34 @@ class Play extends Phaser.Scene {
 
     createEndZone(endZone, player) {
         const endOfLevel = this.physics.add.sprite(endZone.x, endZone.y + 5, 'end')
-            .setAlpha(0)
-            .setSize(endZone.width, endZone.height)
-            .setOrigin(0.5, 1);
+          .setAlpha(0)
+          .setSize(endZone.width, endZone.height)
+          .setOrigin(0.5, 1);
     
-        const eoOverlap = this.physics.add.overlap(player, endOfLevel, () => {
-            let message;
-            if (this.collectedEggs === this.totalEggs) {
-                eoOverlap.active = false;
-                // set player alive to false to stop event listeners
-                player.alive = false;
-                this.scene.start('EndGameScene', { score: this.score });
+        const eoOverlap = this.physics.add.overlap(player, endOfLevel, async () => {
+          let message;
+          if (this.collectedEggs === this.totalEggs) {
+            eoOverlap.active = false;
+            player.alive = false;
+            const qualifies = await this.checkLeaderboardQualification(this.score);
+            if (qualifies) {
+              this.scene.start('InputScoreScene', { message: 'You qualified for the leaderboard!', score: this.score });
             } else {
-                message = this.add.text(endZone.x - 75, endZone.y - 75, `You need to collect ${this.totalEggs - this.collectedEggs} more eggs!`, {
-                    fontSize: '20px',
-                    color: '#ffffff'
-                });
-    
-                // Remove the text after 5 seconds
-                setTimeout(() => {
-                    message.destroy();
-                }, 5000);
+              this.scene.start('EndGameScene', { message: 'Thanks for playing!', score: this.score });
             }
+          } else {
+            message = this.add.text(endZone.x - 75, endZone.y - 75, `You need to collect ${this.totalEggs - this.collectedEggs} more eggs!`, {
+              fontSize: '20px',
+              color: '#ffffff'
+            });
+    
+            // Remove the text after 5 seconds
+            setTimeout(() => {
+              message.destroy();
+            }, 5000);
+          }
         });
-    }
+      }
 }
 
 export default Play;
