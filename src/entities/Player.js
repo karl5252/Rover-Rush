@@ -87,21 +87,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     
         console.log('Player died by', initiator);
         this.alive = false;
-        this.setTint(0xff0000); // Optional: Set red tint to indicate death
+        //this.setTint(0xff0000); // Optional: Set red tint to indicate death
+        this.anims.play('hurt', true); // Play hurt animation
         this.anims.stop(); // Stop animations
         this.scene.physics.pause(); // Pause physics
         this.setVelocity(0, 0); // Stop player movement
 
         let text = '';
         if (initiator === 'fall') {
-            text = 'You fell';
+            text = 'WASTED';
         } else {
-            text = 'You were caught!';
+            text = 'BUSTED!';
         }
         // add text pverhead the ninja saying "You were caught!"
         this.scene.add.text(this.x - 50, this.y - 60, text, {
             fontSize: '32px',
             fill: '#fff',
+            stroke: '#000',
+            strokeThickness: 2,
+            fontWeigth: 'bold'
+            
         });
 
         // Restart the scene after a short delay

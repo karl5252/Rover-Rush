@@ -188,9 +188,12 @@ class Play extends Phaser.Scene {
               this.scene.start('EndGameScene', { message: 'Thanks for playing!', score: this.score });
             }
           } else {
-            message = this.add.text(endZone.x - 75, endZone.y - 75, `You need to collect ${this.totalEggs - this.collectedEggs} more eggs!`, {
+            message = this.add.text(endZone.x - 75, endZone.y - 75, `Need ${this.totalEggs - this.collectedEggs} eggs!`, {
               fontSize: '20px',
-              color: '#ffffff'
+              color: '#ffffff',
+              stroke: '#000000',
+              strokeThickness: 2,
+              fontWeight: 'bold',
             });
     
             // Remove the text after 5 seconds

@@ -30,6 +30,16 @@ export default (anims) => {
     })
 
     anims.create({
+      key: 'hurt',
+      frames: anims.generateFrameNumbers('player', {
+        start: 23,
+        end: 23
+      }),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    anims.create({
       key: 'hide',
       frames: anims.generateFrameNumbers('player', {
         start: 25,
