@@ -41,6 +41,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
-    "phaser": "^3.80.1"
+    "netlify-lambda": "^2.0.16",
+    "phaser": "^3.80.1",
+    "serverless-http": "^3.2.0"
   }
 }
