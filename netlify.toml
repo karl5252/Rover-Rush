@@ -2,5 +2,3 @@
   command = "npm run dev"
   publish = "dist"
 
-[build.environment]
-  NODE_VERSION = "12"
