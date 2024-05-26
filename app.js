@@ -14,8 +14,8 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_CONNECTION_URL, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
-  ssl: true,
-  sslValidate: false,
+  tls: true,
+  tlsInsecure: true,
 });
 mongoose.connection.on('error', (error) => {
   console.log(error);
