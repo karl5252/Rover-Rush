@@ -1,13 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const resolvedPath = path.join(__dirname,'..', 'models', 'Leaderboard');
+const fs = require('fs');
+
+const parentDir = path.join(__dirname, '..');
+fs.readdir(parentDir, (err, files) => {
+  if (err) {
+    console.error(`Error reading directory: ${err}`);
+  } else {
+    console.log(`Contents of ${parentDir}:`, files);
+  }
+});
+
+const resolvedPath = path.join(parentDir, 'models', 'Leaderboard');
 console.log(`Resolved path: ${resolvedPath}`);
+
 try {
   const Leaderboard = require(resolvedPath);
 } catch (error) {
   console.error(`Error requiring Leaderboard module: ${error}`);
 }
+
 // GET leaderboard
 router.get('/leaderboard', async (req, res) => {
   try {
