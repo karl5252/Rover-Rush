@@ -72,7 +72,7 @@ class InputScoreScene extends Phaser.Scene {
 
   async updateLeaderboard(initials, score) {
     try {
-      const response = await fetch('/.netlify/functions/leaderboard', {
+      const response = await fetch(this.config.leaderboardUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

@@ -1,15 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, argv) => ({
   entry: {
-    app: path.resolve(__dirname, './src/index.js'),
+    app: { import: path.resolve(__dirname, './src/index.js'), dependOn: 'vendor' },
     vendor: ['phaser'],
   },
-  devtool: argv.mode === 'development' ? 'cheap-module-eval-source-map' : 'none',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -39,9 +39,11 @@ module.exports = (env, argv) => ({
       CANVAS_RENDERER: true,
     }),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { from: 'assets', to: 'assets' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'assets', to: 'assets' },
+      ],
+    }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',

@@ -50,7 +50,7 @@ class Play extends Phaser.Scene {
     
     async checkLeaderboardQualification(score) {
       try {
-        const response = await fetch('/.netlify/functions/leaderboard');
+        const response = await fetch(this.config.leaderboardUrl);
         const leaderboard = await response.json();
         const top7 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 7);
         const lowestScore = Math.min(...top7.map(entry => entry.score));
@@ -68,25 +68,26 @@ class Play extends Phaser.Scene {
     }
 
     createLayers(map) {
-        const tileset = map.getTileset('tilemap');
-        const platformsColliders = map.createStaticLayer('colliders', tileset).setAlpha(0);
-        const environment = map.createStaticLayer('environment', tileset);
-        const platforms = map.createStaticLayer('platforms', tileset);
-        const playerZones = map.getObjectLayer('playerZones');
-        const enemySpawns = map.getObjectLayer('enemySpawnPoints');
-        const collectibleLayer = map.getObjectLayer('collectibles');
-
-        platformsColliders.setCollisionByProperty({ collides: true });
-
-        return { 
-            environment,
-             platforms,
-              platformsColliders,
-               playerZones,
-                enemySpawns,
-                 collectibleLayer };
-    }
-
+      const tileset = map.getTileset('tilemap');
+      const platformsColliders = map.createLayer('colliders', tileset).setAlpha(0);
+      const environment = map.createLayer('environment', tileset);
+      const platforms = map.createLayer('platforms', tileset);
+      const playerZones = map.getObjectLayer('playerZones');
+      const enemySpawns = map.getObjectLayer('enemySpawnPoints');
+      const collectibleLayer = map.getObjectLayer('collectibles');
+  
+      platformsColliders.setCollisionByProperty({ collides: true });
+  
+      return { 
+          environment,
+          platforms,
+          platformsColliders,
+          playerZones,
+          enemySpawns,
+          collectibleLayer 
+      };
+  }
+  
     createPlayer(start) {
         const player = new Player(this, start.x, start.y);
         return player;

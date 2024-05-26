@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node app.js",
     "dev": "concurrently \"npm run dev:game\" \"npm run dev:server\"",
-    "dev:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development --config webpack.config.js",
+    "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
     "dev:server": "nodemon ./app.js",
     "build": "concurrently \"npm run build:game\" \"npm run build:server\"",
-    "build:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack --mode production --config webpack.config.js",
+    "build:game": "webpack --mode production --config webpack.config.js",
     "build:server": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,21 +17,21 @@
   "repository": "https://github.com/jedhastwell/phaser3-es6-webpack-boilerplate",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.24.6",
     "@babel/plugin-transform-runtime": "^7.24.6",
     "@babel/preset-env": "^7.24.6",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^2.0.2",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^8.2.2",
-    "copy-webpack-plugin": "^5.1.2",
+    "copy-webpack-plugin": "^12.0.2",
     "cross-env": "^7.0.3",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "nodemon": "^3.1.0",
-    "raw-loader": "^2.0.0",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "nodemon": "^3.1.1",
+    "raw-loader": "^4.0.2",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.6",
@@ -40,6 +40,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
-    "phaser": "^3.24.1"
+    "phaser": "^3.80.1"
   }
 }
