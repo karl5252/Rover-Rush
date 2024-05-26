@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const resolvedPath = path.join(__dirname, 'models', 'Leaderboard');
+const resolvedPath = path.join(__dirname,'..', 'models', 'Leaderboard');
 console.log(`Resolved path: ${resolvedPath}`);
 try {
   const Leaderboard = require(resolvedPath);
