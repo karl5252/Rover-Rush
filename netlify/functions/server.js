@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const serverless = require('serverless-http');
 
 // Import routes
-const routes = require('../../routes/main');
+//const routes = require('../../routes/main');
 const leaderboardRoutes = require('../../routes/leaderboard');
 
 // Setup MongoDB connection
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Use routes
-app.use('/.netlify/functions/server', routes);
+//app.use('/.netlify/functions/server', routes);
 app.use('/.netlify/functions/server', leaderboardRoutes);
 
 // Catch-all handler for undefined routes
