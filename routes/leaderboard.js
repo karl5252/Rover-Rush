@@ -1,21 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const fs = require('fs');
-
-const resolvedPath = path.join(__dirname,'.', 'mLeaderboard');
-console.log(`Resolved path: ${resolvedPath}`);
-
-// Check if the file exists
-fs.access(resolvedPath, fs.constants.F_OK, (err) => {
-  console.log(`${resolvedPath} ${err ? 'does not exist' : 'exists'}`);
-});
-
-try {
-  const Leaderboard = require(resolvedPath);
-} catch (error) {
-  console.error(`Error requiring Leaderboard module: ${error}`);
-}
+const Leaderboard = require('./mLeaderboard');
 
 // GET leaderboard
 router.get('/leaderboard', async (req, res) => {
