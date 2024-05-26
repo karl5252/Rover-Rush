@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const Leaderboard = require('../../../models/mLeaderboard'); // Ensure the path is correct
+const Leaderboard = require('../../models/mLeaderboard'); // Ensure the path is correct
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
