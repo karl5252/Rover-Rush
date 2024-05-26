@@ -9,7 +9,7 @@
     "dev:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --mode development --config webpack.config.js",
     "dev:server": "nodemon ./app.js",
     "build": "concurrently \"npm run build:game\" \"npm run build:server\"",
-    "build:game": "webpack --mode production --config webpack.config.js",
+    "build:game": "set NODE_OPTIONS=--openssl-legacy-provider && webpack --mode production --config webpack.config.js",
     "build:server": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
