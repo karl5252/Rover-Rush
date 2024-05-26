@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 
 class EndGameScene extends Phaser.Scene {
-  constructor() {
+  constructor(config) {
     super('EndGameScene');
+    this.config = config;
   }
 
   init(data) {
@@ -11,61 +12,66 @@ class EndGameScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'Thanks for playing!', {
+    this.add.text(this.cameras.main.centerX, 100, 'Thanks for playing!', {
       fontSize: '48px',
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, this.message, {
+    this.add.text(this.cameras.main.centerX, 180, `Your Score: ${this.score}`, {
       fontSize: '32px',
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 50, `Your Score: ${this.score}`, {
-      fontSize: '32px',
-      color: '#ffffff'
-    }).setOrigin(0.5);
-
-    const restartButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, 'Restart', {
-      fontSize: '32px',
-      color: '#ffffff',
-      backgroundColor: '#000000'
-    }).setOrigin(0.5).setPadding(10).setInteractive();
-
-    restartButton.on('pointerdown', () => {
-      this.scene.start('PlayScene');
-    });
-
-    const menuButton = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 200, 'Main Menu', {
-      fontSize: '32px',
-      color: '#ffffff',
-      backgroundColor: '#000000'
-    }).setOrigin(0.5).setPadding(10).setInteractive();
-
-    menuButton.on('pointerdown', () => {
-      this.scene.start('MenuScene');
-    });
-
-    // Add and configure the snail
-    //this.snail = new Snail(this, this.cameras.main.centerX - 200, this.cameras.main.centerY);
+    this.displayLeaderboard();
   }
-  
-  
- /* update(time, delta) {
-    // Snail walking animation
-    this.snail.anims.play('snail-walk', true);
 
-    // Snail movement logic
-    this.snail.x += this.snailSpeed * this.snailDirection * (delta / 1000);
+  async displayLeaderboard() {
+    try {
+      const response = await fetch(this.config.leaderboardUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const leaderboard = await response.json();
 
-    if (this.snail.x >= this.cameras.main.width - 50) {
-      this.snailDirection = -1;
-      this.snail.setFlipX(true);
-    } else if (this.snail.x <= 50) {
-      this.snailDirection = 1;
-      this.snail.setFlipX(false);
+      this.add.text(this.cameras.main.centerX, 250, 'Leaderboard:', {
+        fontSize: '32px',
+        color: '#ffffff'
+      }).setOrigin(0.5);
+
+      // Limit the leaderboard display to top 7 results
+      leaderboard.slice(0, 7).forEach((entry, index) => {
+        this.add.text(this.cameras.main.centerX, 300 + (index * 30), `${entry.initials}.......${entry.score}`, {
+          fontSize: '28px',
+          color: '#ffffff'
+        }).setOrigin(0.5);
+      });
+
+      const buttonY = 300 + (Math.min(leaderboard.length, 7) * 30) + 50;
+
+      const restartButton = this.add.text(this.cameras.main.centerX - 100, buttonY, 'Restart', {
+        fontSize: '32px',
+        color: '#ffffff',
+        backgroundColor: '#000000'
+      }).setOrigin(0.5).setPadding(10).setInteractive();
+
+      restartButton.on('pointerdown', () => {
+        this.scene.start('PlayScene');
+      });
+
+      const menuButton = this.add.text(this.cameras.main.centerX + 100, buttonY, 'Main Menu', {
+        fontSize: '32px',
+        color: '#ffffff',
+        backgroundColor: '#000000'
+      }).setOrigin(0.5).setPadding(10).setInteractive();
+
+      menuButton.on('pointerdown', () => {
+        this.scene.start('MenuScene');
+      });
+
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
     }
-  }*/
+  }
 }
 
 export default EndGameScene;

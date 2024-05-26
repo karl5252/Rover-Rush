@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
 import MenuScene from './scenes/Menu';
+import InputScoreScene from './scenes/InputScoreScene';
 import EndGameScene from './scenes/EndGame';
 
 const WIDTH = document.body.offsetWidth;
@@ -22,10 +23,12 @@ const SHARED_CONFIG = {
   rightTopCorner: {
     x: ((WIDTH / ZOOM_FACTOR) + ((WIDTH - (WIDTH / ZOOM_FACTOR)) / 2)),
     y: (HEIGHT - (HEIGHT / ZOOM_FACTOR)) / 2
-  }
+  },
+  leaderboardUrl: '/.netlify/functions/leaderboard'  //for local testing use 'http://localhost:3000/leaderboard' on server /.netlify/functions/leaderboard
+
 }
 
-const Scenes = [PreloadScene, MenuScene, PlayScene, EndGameScene];
+const Scenes = [PreloadScene, MenuScene, PlayScene, InputScoreScene, EndGameScene];
 const createScene = Scene => new Scene(SHARED_CONFIG)
 const initScenes = () => Scenes.map(createScene)
 

@@ -11,6 +11,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         Object.assign(this, collidbable);
         this.alive = true;
+        this.phased = false;
         this.scene = scene;
 
         this.init();
@@ -61,11 +62,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if ((this.cursors.up.isDown || this.jumpKey.isDown) && onFloor) {
             this.setVelocityY(-this.playerSpeed * 2.1);
         }
+        if(this.cursors.down.isDown) {
+            this.playerPhaseInOut();
+        }
 
         if (onFloor) {
-            if (this.body.velocity.x !== 0) {
+            if (this.body.velocity.x !== 0 && !this.phaseActive) {
                 this.play('walk', true);
-            } else {
+            } else if (this.phaseActive) {
+                this.play('hide', true);
+
+            }else {
                 this.play('idle', true);
             }
         } else {
@@ -74,29 +81,71 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playerDeath(initiator) {
+        if (this.phaseActive) {
+            return;
+        }
+    
         console.log('Player died by', initiator);
         this.alive = false;
-        this.setTint(0xff0000); // Optional: Set red tint to indicate death
+        //this.setTint(0xff0000); // Optional: Set red tint to indicate death
+        this.anims.play('hurt', true); // Play hurt animation
         this.anims.stop(); // Stop animations
         this.scene.physics.pause(); // Pause physics
         this.setVelocity(0, 0); // Stop player movement
 
         let text = '';
         if (initiator === 'fall') {
-            text = 'You fell';
+            text = 'WASTED';
         } else {
-            text = 'You were caught!';
+            text = 'BUSTED!';
         }
         // add text pverhead the ninja saying "You were caught!"
         this.scene.add.text(this.x - 50, this.y - 60, text, {
             fontSize: '32px',
             fill: '#fff',
+            stroke: '#000',
+            strokeThickness: 2,
+            fontWeigth: 'bold'
+            
         });
 
         // Restart the scene after a short delay
         this.scene.time.delayedCall(2000, () => {
             this.setVisible(false); // Hide the player sprite
             this.scene.scene.restart();
+        });
+    }
+
+    playerPhaseInOut() {
+        // If the phase in/out is currently active, do nothing
+        if (this.phaseActive || !this.body.blocked.down) {
+            return;
+        }
+    
+        console.log('Player phase in and out to avoid enemy');
+        this.phaseActive = true; // Set the flag to true
+        this.phased = !this.phased;
+
+        // Disable the player's physics body during the phase out
+        if (this.phased) {
+            this.body.enable = false;
+        }
+    
+        // After 1 second, reset the phase in/out
+        this.scene.time.delayedCall(1500, () => {
+            this.phased = !this.phased;
+            console.log(this.phased ? 'Player phased out' : 'Player phased in');
+
+            // Re-enable the player's physics body when the phase in is complete
+            if (!this.phased) {
+                this.body.enable = true;
+            }
+    
+            // After another 1 second1, allow the phase in/out to be triggered again
+            this.scene.time.delayedCall(250, () => {
+                console.log('Player phase in/out reset');
+                this.phaseActive = false;
+            });
         });
     }
 }
