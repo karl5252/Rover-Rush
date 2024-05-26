@@ -10,13 +10,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // setup mongo connection
-//const uri = process.env.MONGO_CONNECTION_URL;
-mongoose.connect(process.env.MONGO_CONNECTION_URL, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true,
-  tls: true,
-  tlsInsecure: true,
-});
+const uri = process.env.MONGO_CONNECTION_URL;
+mongoose.connect(uri);
 mongoose.connection.on('error', (error) => {
   console.log(error);
   process.exit(1);
