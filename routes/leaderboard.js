@@ -3,7 +3,11 @@ const router = express.Router();
 const path = require('path');
 const resolvedPath = path.join(__dirname, 'models', 'Leaderboard');
 console.log(`Resolved path: ${resolvedPath}`);
-const Leaderboard = require(resolvedPath);
+try {
+  const Leaderboard = require(resolvedPath);
+} catch (error) {
+  console.error(`Error requiring Leaderboard module: ${error}`);
+}
 // GET leaderboard
 router.get('/leaderboard', async (req, res) => {
   try {
