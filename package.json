@@ -10,8 +10,7 @@
     "dev:functions": "netlify-lambda serve netlify/functions",
     "build": "npm run build:game && npm run build:functions",
     "build:game": "webpack --mode production --config webpack.config.js",
-    "build:functions": "netlify-lambda build netlify/functions --output netlify/functions-build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:functions": "netlify-lambda build netlify/functions"
   },
   "author": "Jed Hastwell",
   "repository": "https://github.com/jedhastwell/phaser3-es6-webpack-boilerplate",
