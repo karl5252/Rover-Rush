@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const resolvedPath = path.join(__dirname,'..', 'models', 'Leaderboard');
+const resolvedPath = path.join(__dirname,'.', 'Leaderboard');
 console.log(`Resolved path: ${resolvedPath}`);
 
 // Check if the file exists
