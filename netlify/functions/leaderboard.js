@@ -3,22 +3,22 @@ const mongoose = require('mongoose');
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const Leaderboard = require('../../models/mLeaderboard'); // Adjust path
+const Leaderboard = require('../../models/mLeaderboard'); // Ensure the path is correct
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Setup MongoDB connection
-const uri = process.env.MONGO_CONNECTION_URL;
+// Setup MongoDB Atlas connection
+const uri = process.env.MONGO_ATLAS_CONNECTION_URL;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', error => {
   console.error(error);
   process.exit(1);
 });
 mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB Atlas');
 });
 
 const router = express.Router();

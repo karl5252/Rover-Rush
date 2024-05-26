@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "description": "Welcome to Rover Rush, an engaging web-based platformer game where players control a futuristic rover collecting colorful stones across various challenging levels. Developed collaboratively for a family talent show, this game features unique artwork inspired by a child's imagination, fun gameplay mechanics, and easy access through web browsers.",
   "main": "index.js",
-  "scripts": {
-    "start": "netlify dev",
-    "dev": "concurrently \"npm run dev:game\" \"npm run dev:functions\"",
-    "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
-    "dev:functions": "netlify-lambda serve netlify/functions",
-    "build": "npm run build:game && npm run build:functions",
-    "build:game": "webpack --mode production --config webpack.config.js",
-    "build:functions": "netlify-lambda build netlify/functions"
-  },
+  
+    "scripts": {
+      "start": "netlify dev",
+      "dev": "concurrently \"npm run dev:game\" \"npm run dev:functions\"",
+      "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
+      "dev:functions": "netlify-lambda serve netlify/functions",
+      "build": "npm run build:game && npm run build:functions",
+      "build:game": "webpack --mode production --config webpack.config.js",
+      "build:functions": "netlify-lambda build netlify/functions"
+    },
+  
+  
   "author": "Jed Hastwell",
   "repository": "https://github.com/jedhastwell/phaser3-es6-webpack-boilerplate",
   "license": "MIT",
