@@ -8,10 +8,12 @@
     "dev": "concurrently \"npm run dev:game\" \"npm run dev:server\"",
     "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
     "dev:server": "nodemon ./app.js",
-    "build": "npm run build:game",
+    "build": "npm run build:game && npm run build:server",
     "build:game": "webpack --mode production --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-},
+    "build:server": "babel app.js --out-file app.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-start": "node app.prod.js"
+  },
   "author": "Jed Hastwell",
   "repository": "https://github.com/jedhastwell/phaser3-es6-webpack-boilerplate",
   "license": "MIT",
