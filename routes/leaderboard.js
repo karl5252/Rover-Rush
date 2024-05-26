@@ -3,17 +3,13 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const parentDir = path.join(__dirname, '..');
-fs.readdir(parentDir, (err, files) => {
-  if (err) {
-    console.error(`Error reading directory: ${err}`);
-  } else {
-    console.log(`Contents of ${parentDir}:`, files);
-  }
-});
-
-const resolvedPath = path.join(parentDir, 'models', 'Leaderboard');
+const resolvedPath = path.join(__dirname,'..', 'models', 'Leaderboard');
 console.log(`Resolved path: ${resolvedPath}`);
+
+// Check if the file exists
+fs.access(resolvedPath, fs.constants.F_OK, (err) => {
+  console.log(`${resolvedPath} ${err ? 'does not exist' : 'exists'}`);
+});
 
 try {
   const Leaderboard = require(resolvedPath);
