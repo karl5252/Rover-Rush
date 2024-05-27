@@ -1,8 +1,11 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: './netlify/functions/leaderboard.js',
   target: 'node',
+  mode: 'production', // Set the mode explicitly
+  externals: [nodeExternals()], // Add this line to exclude node_modules
   module: {
     rules: [
       {
@@ -24,5 +27,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'netlify/functions-build'),
     filename: 'leaderboard.js'
+  },
+  resolve: {
+    extensions: ['.js'],
+    fallback: {
+      fs: false,
+      net: false,
+      tls: false,
+    }
   }
 };

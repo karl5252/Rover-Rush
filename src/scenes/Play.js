@@ -11,6 +11,8 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+      console.log('Play scene create method called.');
+
         this.score = 0;
         this.totalEggs = 0;
         this.collectedEggs = 0;
@@ -46,20 +48,37 @@ class Play extends Phaser.Scene {
         
         this.createEndZone(playerZones.end, player);
         this.setupFollowupCamera(player);
+
+        //debug
+        this.checkLeaderboardQualification(this.score).then(result => {
+          console.log('Leaderboard qualification result:', result);
+        });
     }
     
     async checkLeaderboardQualification(score) {
       try {
+        console.log('About to fetch leaderboard:', this.config.leaderboardUrl);
+        
         const response = await fetch(this.config.leaderboardUrl);
+        console.log('Fetch response:', response);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
         const leaderboard = await response.json();
+        console.log('Leaderboard data:', leaderboard);
+        
         const top7 = leaderboard.sort((a, b) => b.score - a.score).slice(0, 7);
         const lowestScore = Math.min(...top7.map(entry => entry.score));
+        
         return score > lowestScore || top7.length < 7;
       } catch (error) {
         console.error('Error fetching leaderboard:', error);
         return false;
       }
     }
+
 
     createMap() {
         const map = this.make.tilemap({ key: 'map' });

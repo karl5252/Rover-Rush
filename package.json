@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "Welcome to Rover Rush, an engaging web-based platformer game where players control a futuristic rover collecting colorful stones across various challenging levels. Developed collaboratively for a family talent show, this game features unique artwork inspired by a child's imagination, fun gameplay mechanics, and easy access through web browsers.",
   "main": "index.js",
-    "scripts": {
-      "start": "netlify dev",
-      "dev": "concurrently \"npm run dev:game\" \"npm run dev:functions\"",
-      "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
-      "dev:functions": "netlify-lambda serve netlify/functions",
-      "build": "npm run build:game && npm run build:functions",
-      "build:game": "webpack --mode production --config webpack.config.js",
-      "build:functions": "webpack --config webpack.functions.js"
-    },
+  "scripts": {
+    "start": "netlify dev",
+    "dev": "concurrently \"npm run dev:game\" \"npm run dev:functions\"",
+    "dev:game": "webpack-dev-server --mode development --config webpack.config.js",
+    "dev:functions": "netlify-lambda serve netlify/functions",
+    "build": "npm run build:game && npm run build:functions",
+    "build:game": "webpack --mode production --config webpack.config.js",
+    "build:functions": "webpack --config webpack.functions.js"
+  },
   "author": "Jed Hastwell",
   "repository": "https://github.com/jedhastwell/phaser3-es6-webpack-boilerplate",
   "license": "MIT",
@@ -35,14 +35,23 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
+    "@aws-sdk/credential-providers": "^3.583.0",
     "@babel/runtime": "^7.24.6",
+    "@mongodb-js/zstd": "^1.2.0",
+    "aws4": "^1.13.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "gcp-metadata": "^5.3.0",
+    "kerberos": "^2.1.0",
+    "mongodb-client-encryption": "^6.0.1",
     "mongoose": "^8.4.0",
     "netlify-lambda": "^2.0.16",
     "phaser": "^3.80.1",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "snappy": "^7.2.2",
+    "socks": "^2.8.3",
+    "webpack-node-externals": "^3.0.0"
   }
 }
