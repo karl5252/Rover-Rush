@@ -9,7 +9,7 @@ import EndGameScene from './scenes/EndGame';
 const WIDTH = document.body.offsetWidth;
 const HEIGHT = 700;
 const MAP_WIDTH = 1732;
-const ZOOM_FACTOR = 0.8;
+const ZOOM_FACTOR = 1.5;
 
 
 const SHARED_CONFIG = {
@@ -24,7 +24,8 @@ const SHARED_CONFIG = {
     x: ((WIDTH / ZOOM_FACTOR) + ((WIDTH - (WIDTH / ZOOM_FACTOR)) / 2)),
     y: (HEIGHT - (HEIGHT / ZOOM_FACTOR)) / 2
   },
-  leaderboardUrl: '/.netlify/functions/leaderboard'  //for local testing use 'http://localhost:3000/leaderboard' on server /.netlify/functions/leaderboard
+  zoomFactor: ZOOM_FACTOR,
+  leaderboardUrl: '.netlify/functions/leaderboard'  //for local testing use 'http://localhost:3000/leaderboard' on server /.netlify/functions/leaderboard
 
 }
 

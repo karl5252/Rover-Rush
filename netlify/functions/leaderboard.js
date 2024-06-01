@@ -1,8 +1,28 @@
 const express = require('express');
-const router = express.Router();
-const Leaderboard = require('./mLeaderboard');
+const mongoose = require('mongoose');
+const serverless = require('serverless-http');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const Leaderboard = require('../../models/mLeaderboard'); // Adjust path
 
-// GET leaderboard
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+
+// Setup MongoDB connection
+const uri = process.env.MONGO_CONNECTION_URL;
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on('error', error => {
+  console.error(error);
+  process.exit(1);
+});
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+});
+
+const router = express.Router();
+
 router.get('/leaderboard', async (req, res) => {
   try {
     const leaderboard = await Leaderboard.find().sort({ score: -1 }).limit(10);
@@ -12,8 +32,6 @@ router.get('/leaderboard', async (req, res) => {
   }
 });
 
-// PUT leaderboard
-// keep only seven first entries
 router.put('/leaderboard', async (req, res) => {
   const { initials, score } = req.body;
   if (!initials || !score) {
@@ -21,14 +39,10 @@ router.put('/leaderboard', async (req, res) => {
   }
 
   try {
-    // Add the new entry
     const newEntry = new Leaderboard({ initials, score });
     await newEntry.save();
 
-    // Get the top 7 scores after adding the new entry
     const top7 = await Leaderboard.find().sort({ score: -1 }).limit(7);
-
-    // Remove all entries that are not in the top 7
     const top7Ids = top7.map(entry => entry._id);
     await Leaderboard.deleteMany({ _id: { $nin: top7Ids } });
 
@@ -38,4 +52,6 @@ router.put('/leaderboard', async (req, res) => {
   }
 });
 
-module.exports = router;
+app.use('/.netlify/functions', router);
+
+module.exports.handler = serverless(app);

@@ -7,11 +7,12 @@ class Hud extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     scene.add.existing(this)
-
-
     this.containerWidth = 70;
 
-    this.setPosition(15, 15);
+    const hudX = scene.config.leftTopCorner.x + 10;
+    const hudY = scene.config.leftTopCorner.y + 20;
+
+    this.setPosition(hudX, hudY);
     this.setScrollFactor(0);
     this.fontSize = 20;
     this.setupList();
