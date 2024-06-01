@@ -45,7 +45,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
         this.controls.update(this);
 
-        
+        const onFloor = this.body.onFloor();
+        if (onFloor) {
+            if (this.body.velocity.x !== 0 && !this.phaseActive) {
+              this.play('walk', true);
+            } else if (this.phaseActive) {
+              this.play('hide', true);
+            } else {
+              this.play('idle', true);
+            }
+          } else {
+            this.play('jump', true);
+          }
     }
 
     playerDeath(initiator) {
