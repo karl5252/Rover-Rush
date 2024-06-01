@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import initAnims from '../anims/playerAnims';
 import collidbable from '../mixins/collidbable';
+import Controls from '../controls/Controls';
+
 
 class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
@@ -13,6 +15,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.alive = true;
         this.phased = false;
         this.scene = scene;
+
+        this.controls = new Controls(scene);
 
         this.init();
         this.eventListeners();
@@ -39,45 +43,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (!this.alive) {
             return;
         }
+        this.controls.update(this);
 
-        const { left, right } = this.cursors;
-        const onFloor = this.body.onFloor();
-
-        // Check if the player falls out of the world bounds
-        if (this.y > this.scene.sys.game.config.height) {
-            this.playerDeath('fall');
-            console.log('Player died by falling');
-        }
-
-        if (left.isDown) {
-            this.setVelocityX(-this.playerSpeed);
-            this.setFlipX(true);
-        } else if (right.isDown) {
-            this.setVelocityX(this.playerSpeed);
-            this.setFlipX(false);
-        } else {
-            this.setVelocityX(0);
-        }
-
-        if ((this.cursors.up.isDown || this.jumpKey.isDown) && onFloor) {
-            this.setVelocityY(-this.playerSpeed * 2.1);
-        }
-        if(this.cursors.down.isDown) {
-            this.playerPhaseInOut();
-        }
-
-        if (onFloor) {
-            if (this.body.velocity.x !== 0 && !this.phaseActive) {
-                this.play('walk', true);
-            } else if (this.phaseActive) {
-                this.play('hide', true);
-
-            }else {
-                this.play('idle', true);
-            }
-        } else {
-            this.play('jump', true);
-        }
+        
     }
 
     playerDeath(initiator) {
