@@ -1,10 +1,13 @@
-import Phaser from 'phaser';
+import Phaser, { Plugins } from 'phaser';
 
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
 import MenuScene from './scenes/Menu';
 import InputScoreScene from './scenes/InputScoreScene';
 import EndGameScene from './scenes/EndGame';
+import { plugin } from 'mongoose';
+import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js'; // Importing joystick plugin
+
 
 const WIDTH = document.body.offsetWidth;
 const HEIGHT = 700;
@@ -43,7 +46,13 @@ const config = {
       debug: false,
     }
   },
-  scene: initScenes()
-}
+  scene: initScenes(),
+  Plugins: {
+    global: [
+      {
+        key: 'rexVirtualJoystick', plugin: VirtualJoystickPlugin, start: true}
+    ]
+  }
+};
 
 new Phaser.Game(config);

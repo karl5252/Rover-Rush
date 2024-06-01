@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 import initAnims from '../anims/playerAnims';
 import collidbable from '../mixins/collidbable';
-import Controls from '../controls/Controls';
+//import Controls from '../controls/Controls';
+import ControlsFactory from '../controls/ControlsFactory';
+
 
 
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -16,7 +18,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.phased = false;
         this.scene = scene;
 
-        this.controls = new Controls(scene);
+        this.controls = ControlsFactory.createControls(scene);
+        //this.controls = new Controls(scene);
 
         this.init();
         this.eventListeners();
