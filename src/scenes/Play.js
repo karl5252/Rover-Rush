@@ -49,9 +49,9 @@ class Play extends Phaser.Scene {
     this.createEndZone(playerZones.end, player);
     this.setupFollowupCamera(player);
 
-    if (this.sys.game.device.os.android || this.sys.game.device.os.iOS) {
+    /*if (this.sys.game.device.os.android || this.sys.game.device.os.iOS) {
       this.createJoystick();
-    }
+    }*/
 
     // Debug
     this.checkLeaderboardQualification(this.score).then(result => {
@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
     });
   }
 
-  createJoystick() {
+  /*createJoystick() {
     this.joystick = this.plugins.get('rexVirtualJoystick').add(this, {
       x: this.cameras.main.width / 2,
       y: this.cameras.main.height / 2,
@@ -69,9 +69,9 @@ class Play extends Phaser.Scene {
     }).setScrollFactor(0);
 
     this.joystick.on('update', this.updateJoystick, this);
-  }
+  }*/
 
-  updateJoystick() {
+  /*updateJoystick() {
     const deadzone = 0.2; // Deadzone threshold
     const force = this.joystick.force;
     const angle = this.joystick.angle;
@@ -103,7 +103,7 @@ class Play extends Phaser.Scene {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
     }
-  }
+  }*/
 
   async checkLeaderboardQualification(score) {
     try {
