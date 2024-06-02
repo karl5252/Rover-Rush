@@ -43,35 +43,65 @@ class Joystick {
 
     if (force > deadzone) {
       const cappedForce = Math.min(force, 1); // Cap the force to 1
-
+    
       // Determine movement direction based on angle
       let velocityX = 0;
       let velocityY = 0;
-
-      if (angle >= -45 && angle <= 45) {
-        // Right
+    
+      if (angle >= -22.5 && angle < 22.5) {
+        // E
         this.player.setFlipX(false);
         velocityX = this.player.playerSpeed * cappedForce;
-      } else if (angle > 58 && angle < 135 && onFloor) {
-        // Down
-        //velocityY = this.player.playerSpeed * cappedForce;
-        this.player.playerPhaseInOut();
-
-      } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
-        // Left
+      } else if (angle >= 22.5 && angle < 67.5) {
+        // NE
+        velocityX = this.player.playerSpeed * cappedForce * Math.cos(Math.PI / 4);
+        velocityY = -this.player.playerSpeed * cappedForce * Math.sin(Math.PI / 4);
+      } else if (angle >= 67.5 && angle < 112.5) {
+        // N
+        if (onFloor) {
+          this.player.playerPhaseInOut(); // Phase in and out when joystick is pushed up
+        }
+      } else if (angle >= 112.5 && angle < 157.5) {
+        // NW
+        this.player.setFlipX(true);
+        velocityX = -this.player.playerSpeed * cappedForce * Math.cos(Math.PI / 4);
+        velocityY = -this.player.playerSpeed * cappedForce * Math.sin(Math.PI / 4);
+      } else if ((angle >= 157.5 && angle <= 180) || (angle >= -180 && angle < -157.5)) {
+        // W
         this.player.setFlipX(true);
         velocityX = -this.player.playerSpeed * cappedForce;
-      } else if (angle < -70 && onFloor) {
-        // Up
-        velocityY = -this.player.playerSpeed * 2.1;
-        console.log('jump');
+      } else if (angle >= -157.5 && angle < -112.5) {
+        // SW
+        this.player.setFlipX(true);
+        velocityX = -this.player.playerSpeed * cappedForce * Math.cos(Math.PI / 4);
+        velocityY = this.player.playerSpeed * cappedForce * Math.sin(Math.PI / 4);
+      } else if (angle >= -112.5 && angle < -67.5) {
+        // S
+        if (this.player.body.onFloor()) {
+          this.player.isJumping = true;
+          velocityY = -this.player.playerSpeed * 2.1; // Always jump with max force
+        }
+        if (!this.player.body.onFloor() && this.player.isJumping) {
+          this.player.isJumping = false; // Reset flag when player is in the air
+        }
+        if (this.player.body.onFloor() && this.player.isJumping) {
+          velocityY = -this.player.playerSpeed * 2.1; // Always jump with max force
+        }
+      } else if (angle >= -67.5 && angle < -22.5) {
+        // SE
+        this.player.setFlipX(false);
+        velocityX = this.player.playerSpeed * cappedForce * Math.cos(Math.PI / 4);
+        velocityY = this.player.playerSpeed * cappedForce * Math.sin(Math.PI / 4);
       }
-
+    
       this.player.setVelocityX(velocityX);
       this.player.setVelocityY(velocityY);
     } else {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
+      if (this.player.isJumping) {
+        this.player.isJumping = false; // Reset flag when joystick is released
+      }
     }
   }
 
