@@ -72,12 +72,33 @@ class Play extends Phaser.Scene {
   }
 
   updateJoystick() {
+    const deadzone = 0.2; // Deadzone threshold
     const force = this.joystick.force;
     const angle = this.joystick.angle;
 
-    if (force > 0) {
-      this.player.setVelocityX(Math.cos(angle) * this.player.playerSpeed * force);
-      this.player.setVelocityY(Math.sin(angle) * this.player.playerSpeed * force);
+    if (force > deadzone) {
+      const cappedForce = Math.min(force, 1); // Cap the force to 1
+
+      // Determine movement direction based on angle
+      let velocityX = 0;
+      let velocityY = 0;
+
+      if (angle >= -45 && angle <= 45) {
+        // Right
+        velocityX = this.player.playerSpeed * cappedForce;
+      } else if (angle > 45 && angle < 135) {
+        // Down
+        velocityY = this.player.playerSpeed * cappedForce;
+      } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+        // Left
+        velocityX = -this.player.playerSpeed * cappedForce;
+      } else if (angle >= -135 && angle < -45) {
+        // Up
+        velocityY = -this.player.playerSpeed * cappedForce;
+      }
+
+      this.player.setVelocityX(velocityX);
+      this.player.setVelocityY(velocityY);
     } else {
       this.player.setVelocityX(0);
       this.player.setVelocityY(0);
